@@ -10,17 +10,17 @@
 
   <title><%= Typus.admin_title %> &mdash; <%= yield :title %></title>
 
-  <%= stylesheet_link_tag "/admin/stylesheets/screen",
-                          "/admin/stylesheets/application",
-                          "/admin/vendor/fancybox/jquery.fancybox-1.3.4.css" %>
+  <%= stylesheet_link_tag "/stylesheets/screen",
+                          "/stylesheets/application",
+                          "/vendor/fancybox/jquery.fancybox-1.3.4.css" %>
   <%= yield :stylesheets -%>
 
-  <%= javascript_include_tag "/admin/javascripts/jquery-1.4.4.min.js",
-                             "/admin/javascripts/jquery.searchField.js",
-                             "/admin/javascripts/jquery.rails.js",
-                             "/admin/vendor/fancybox/jquery.fancybox-1.3.4.pack.js",
-                             "/admin/javascripts/jquery.application.js",
-                             "/admin/javascripts/application" %>
+  <%= javascript_include_tag "/javascripts/jquery-1.4.4.min.js",
+                             "/javascripts/jquery.searchField.js",
+                             "/javascripts/jquery.rails.js",
+                             "/vendor/fancybox/jquery.fancybox-1.3.4.pack.js",
+                             "/javascripts/jquery.application.js",
+                             "/javascripts/application" %>
   <%= yield :javascripts -%>
 
   <%= csrf_meta_tag %>
