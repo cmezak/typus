@@ -142,7 +142,7 @@ class TypusUserTest < ActiveSupport::TestCase
 
     should "have a token set after creation" do
       assert @typus_user.token.present?
-      assert @typus_user.token.size.eql?(12)
+      assert @typus_user.token.size.eql?(32)
     end
 
   end

@@ -136,7 +136,7 @@ module Typus
       def initialize_salt_and_token
         if new_record?
           self.salt = generate_hash("--#{Time.zone.now.to_s(:number)}--#{email}--")
-          self.token = encrypt("--#{Time.zone.now.to_s(:number)}--#{password}--").first(12)
+          self.token = ActiveSupport::SecureRandom.hex
         end
       end
 
