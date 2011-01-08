@@ -138,11 +138,9 @@ module Typus
       end
 
       def initialize_token
-        generate_token if new_record?
-      end
-
-      def generate_token
-        self.token = encrypt("--#{Time.zone.now.to_s(:number)}--#{password}--").first(12)
+        if new_record?
+          self.token = encrypt("--#{Time.zone.now.to_s(:number)}--#{password}--").first(12)
+        end
       end
 
       def password_required?
