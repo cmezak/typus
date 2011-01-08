@@ -124,8 +124,9 @@ module Typus
       end
 
       def encrypt_password
-        return if password.blank?
-        self.crypted_password = encrypt(password)
+        if password.present?
+          self.crypted_password = encrypt(password)
+        end
       end
 
       def encrypt(string)
