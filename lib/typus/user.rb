@@ -134,7 +134,9 @@ module Typus
       end
 
       def initialize_salt
-        self.salt = generate_hash("--#{Time.zone.now.to_s(:number)}--#{email}--") if new_record?
+        if new_record?
+          self.salt = generate_hash("--#{Time.zone.now.to_s(:number)}--#{email}--")
+        end
       end
 
       def initialize_token
