@@ -140,6 +140,11 @@ class TypusUserTest < ActiveSupport::TestCase
       assert_equal expected, @typus_user.preferences
     end
 
+    should "have a token set after creation" do
+      assert @typus_user.token.present?
+      assert @typus_user.token.size.eql?(12)
+    end
+
   end
 
   context "Admin Role" do
