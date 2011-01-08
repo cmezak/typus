@@ -118,11 +118,6 @@ module Typus
 
       protected
 
-      # TODO: Update the hash generation by a harder one ...
-      def generate_hash(string)
-        Digest::SHA1.hexdigest(string)
-      end
-
       def encrypt_password
         if password.present?
           self.crypted_password = encrypt(password)
@@ -130,7 +125,7 @@ module Typus
       end
 
       def encrypt(string)
-        generate_hash("--#{salt}--#{string}--")
+        Digest::SHA1.hexdigest("--#{salt}--#{string}--")
       end
 
       def initialize_salt_and_token
