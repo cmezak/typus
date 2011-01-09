@@ -10,7 +10,7 @@ class Admin::SessionController < Admin::BaseController
   end
 
   def create
-    user = Typus.user_class.find_by_email_and_status(params[:typus_user][:email], true).try(:authenticate, params[:typus_user][:password])
+    user = Typus.user_class.active.find_by_email(params[:typus_user][:email]).try(:authenticate, params[:typus_user][:password])
 
     path = if user
              session[:typus_user_id] = user.id

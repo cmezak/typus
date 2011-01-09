@@ -34,6 +34,8 @@ module Typus
 
         include InstanceMethods
 
+        scope :active, where(:status => true)
+
       end
 
     end
