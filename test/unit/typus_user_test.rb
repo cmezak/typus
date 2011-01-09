@@ -90,9 +90,9 @@ class TypusUserTest < ActiveSupport::TestCase
       assert_equal expected, @typus_user.salt
     end
 
-    should "verify authenticated? returns true or false" do
-      assert @typus_user.authenticated?('12345678')
-      assert !@typus_user.authenticated?('87654321')
+    should "verify authenticate returns true or false" do
+      assert @typus_user.authenticate('12345678')
+      assert !@typus_user.authenticate('87654321')
     end
 
     should "verify can? accepts a Class" do

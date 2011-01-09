@@ -42,7 +42,7 @@ module Typus
 
       def authenticate(email, password)
         user = find_by_email_and_status(email, true)
-        user && user.authenticated?(password) ? user : nil
+        user && user.authenticate(password) ? user : nil
       end
 
       def generate(*args)
@@ -67,7 +67,7 @@ module Typus
         full_name.any? ? full_name.join(" ") : email
       end
 
-      def authenticated?(password)
+      def authenticate(password)
         crypted_password == encrypt(password)
       end
 
