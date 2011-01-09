@@ -1,3 +1,5 @@
+require 'bcrypt'
+
 module Typus
 
   module EnableAsTypusUser
@@ -12,23 +14,20 @@ module Typus
 
         extend ClassMethodsMixin
 
-        attr_accessor :password
+        attr_reader   :password
+        attr_accessor :password_confirmation
+
+        attr_protected :crypted_password if respond_to?(:attr_protected)
         attr_protected :status
 
-        validates :email,
-                  :presence => true,
-                  :uniqueness => true,
-                  :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/ }
-
-        validates :password,
-                  :confirmation => { :if => :password_required? },
-                  :presence => { :if => :password_required? }
+        validates :crypted_password, :presence => true
+        validates :email, :presence => true, :uniqueness => true, :format => { :with => /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/ }
+        validates :password, :confirmation => true
+        validates :role, :presence => true
 
         validates_length_of :password, :within => 6..40, :if => :password_required?
 
-        validates :role, :presence => true
-
-        before_save :initialize_salt_and_token, :encrypt_password
+        before_create :initialize_token
 
         serialize :preferences
 
@@ -50,7 +49,6 @@ module Typus
 
         new :email => options[:email],
             :password => options[:password],
-            :password_confirmation => options[:password],
             :role => options[:role],
             :preferences => { :locale => ::I18n.default_locale.to_s }
       end
@@ -64,8 +62,8 @@ module Typus
         full_name.any? ? full_name.join(" ") : email
       end
 
-      def authenticate(password)
-        crypted_password == encrypt(password) ? self : false
+      def authenticate(unencrypted_password)
+        BCrypt::Password.new(crypted_password) == unencrypted_password ? self : false
       end
 
       def resources
@@ -113,27 +111,20 @@ module Typus
         self.preferences[:locale] = locale
       end
 
+      def password=(unencrypted_password)
+        @password = unencrypted_password
+        self.crypted_password = BCrypt::Password.create(unencrypted_password)
+      end
+
       protected
 
-      def encrypt_password
-        if password.present?
-          self.crypted_password = encrypt(password)
-        end
-      end
-
-      def encrypt(string)
-        Digest::SHA1.hexdigest("--#{salt}--#{string}--")
-      end
-
-      def initialize_salt_and_token
-        if new_record?
-          self.salt = ActiveSupport::SecureRandom.hex
-          self.token = ActiveSupport::SecureRandom.hex
-        end
+      def initialize_token
+        self.token = ActiveSupport::SecureRandom.hex
+        self.salt = ActiveSupport::SecureRandom.hex
       end
 
       def password_required?
-        crypted_password.blank? || !password.blank?
+        crypted_password.blank? || password.present?
       end
 
     end
