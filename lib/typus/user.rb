@@ -40,11 +40,6 @@ module Typus
 
     module ClassMethodsMixin
 
-      def authenticate(email, password)
-        user = find_by_email_and_status(email, true)
-        user && user.authenticate(password) ? user : nil
-      end
-
       def generate(*args)
         options = args.extract_options!
 
@@ -68,7 +63,7 @@ module Typus
       end
 
       def authenticate(password)
-        crypted_password == encrypt(password)
+        crypted_password == encrypt(password) ? self : false
       end
 
       def resources
