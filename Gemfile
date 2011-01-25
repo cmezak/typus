@@ -11,7 +11,9 @@ gem 'rack-cache', :require => 'rack/cache'
 gem 'rails', '~> 3.0'
 
 group :test do
+  gem 'rspec-rails', :require => false
   gem 'shoulda'
+  gem 'syntax', :require => false
   gem 'tartare', :git => 'https://github.com/fesplugas/rails-tartare.git', :require => false
 
   gem 'mocha'

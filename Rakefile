@@ -2,6 +2,10 @@ require 'rubygems'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
+require 'rspec/core'
+require 'rspec/core/rake_task'
+RSpec::Core::RakeTask.new(:spec)
+
 $LOAD_PATH.unshift File.expand_path('../lib', __FILE__)
 require 'typus/version'
 
