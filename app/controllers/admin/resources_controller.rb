@@ -375,7 +375,7 @@ class Admin::ResourcesController < Admin::BaseController
       if worked
         notice = Typus::I18n.t("%{model} successfully updated.", :model => item_class.model_name.human)
       else
-        alert = @item.error.full_messages
+        alert = @item.errors.full_messages
       end
     end
 
