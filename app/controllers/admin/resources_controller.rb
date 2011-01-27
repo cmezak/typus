@@ -34,15 +34,16 @@ class Admin::ResourcesController < Admin::BaseController
 
   def new
     item_params = params.dup
-    item_params.each do |name, value|
-      if name =~ /(.+)_id$/
-        new_param = params[:resource] << "_type"
-        new_value = $1.to_s
-        #item_params.merge!({ new_param  => new_value, "testparam" => "testvlue" })
-      end
-    end
+    #item_params.each do |name, value|
+    #  if name =~ /(.+)_id$/
+    #    new_param = params[:resource] << "_type"
+    #    new_value = $1.to_s
+    #    #item_params.merge!({ new_param  => new_value, "testparam" => "testvlue" })
+    #  end
+    #end
     item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
-    item_params.merge!({ "imageable_type"  => "Bird" })
+    h2 = { "imageable_type"  => "Bird" }
+    item_params.merge!(h2)
     
     @item = @resource.new(item_params)
   end
