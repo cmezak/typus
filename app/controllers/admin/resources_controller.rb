@@ -39,10 +39,11 @@ class Admin::ResourcesController < Admin::BaseController
         new_param = params[:resource] << "_type"
         new_value = $1.to_s
         #item_params.merge!({ new_param  => new_value, "testparam" => "testvlue" })
-        item_params.merge!({ "imageable_type"  => "Bird" })
       end
     end
     item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
+    item_params.merge!({ "imageable_type"  => "Bird" })
+    
     @item = @resource.new(item_params)
   end
 
