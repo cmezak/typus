@@ -34,7 +34,7 @@ class Admin::ResourcesController < Admin::BaseController
 
   def new
     item_params = params.dup
-    item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
+    #item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
     @item = @resource.new(item_params)
   end
 
