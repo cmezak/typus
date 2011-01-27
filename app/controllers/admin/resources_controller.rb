@@ -34,13 +34,14 @@ class Admin::ResourcesController < Admin::BaseController
 
   def new
     item_params = params.dup
-    item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
-
     item_params.each do |name, value|
       if name =~ /(.+)_id$/
         item_params.merge! {params[:resource] << "_type" => $1}
       end
     end
+    item_params.delete_if { |k, v| !@resource.columns.map(&:name).include?(k) }
+
+
 
     @item = @resource.new(item_params)
   end
