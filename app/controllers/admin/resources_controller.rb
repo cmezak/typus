@@ -46,6 +46,7 @@ class Admin::ResourcesController < Admin::BaseController
     item_params.merge!(h2)
     
     @item = @resource.new(item_params)
+    @item.imageable_type = "Bird"
   end
 
   ##
